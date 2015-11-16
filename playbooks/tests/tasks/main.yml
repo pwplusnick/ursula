@@ -3,3 +3,4 @@
 - include: controller.yml
 - include: network.yml
 - include: integration.yml
+- include: ci-network.yml

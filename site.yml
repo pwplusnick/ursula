@@ -374,3 +374,11 @@
       service: name=neutron-openvswitch-agent state=restarted
       when: neutron.plugin == 'ovs'
   environment: "{{ env_vars|default({}) }}"
+
+- name: turn off ip forwarding on all hosts
+  hosts: all
+  tasks:
+    - name: add net.ipv4.ip_forward = 0 to sysctl.conf
+      sysctl: name="net.ipv4.ip_forward" value=0 reload=yes state=present
+      tags: ['always']
+      when: not neutron.enable_external_interface|bool
